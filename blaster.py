@@ -92,7 +92,7 @@ def switchy_main(net):
 
         if gotpkt:
             log_debug("I got a packet")
-            end_time = time.time()
+            end_time = time.time() * 1000
             sequence = parse_pkt(pkt)
             for pending_pkt in timeout_queue:
                 if pending_pkt[0] == sequence:
@@ -112,8 +112,8 @@ def switchy_main(net):
             log_debug("Didn't receive anything")
 
             #check timeout_queue
-            timeout = false
-            curr_time = time.time()
+            timeout = False
+            curr_time = time.time() * 1000
 
             for pending_pkt in timeout_queue:
                 if pending_pkt[1] - time >= timeout:
@@ -134,8 +134,8 @@ def switchy_main(net):
                 pkt = mk_pkt(blaster_mac, middlebox_mac, blaster_ip, dst_ip, rhs, length)
                 net.send_packet(blaster_mac, pkt)
                 if (start_time < 0):
-                    start_time = time.time()
-                timeout_queue.append((rhs, time.time()))
+                    start_time = time.time() * 1000
+                timeout_queue.append((rhs, time.time() * 1000))
                 rhs += 1
 
 
