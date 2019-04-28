@@ -118,7 +118,7 @@ def switchy_main(net):
             for pending_pkt in timeout_queue:
                 if pending_pkt[1] - time >= timeout:
                     pending_pkt[1] = curr_time
-                    pkt = mk_pkt(blaster_mac, middlebox_mac, blaster_ip, dst_ip, pending_pkt[0], length)
+                    pkt = mk_pkt(blaster_mac, middlebox_mac, blaster_ip, blastee_ip, pending_pkt[0], length)
                     net.send_packet(blaster_mac, pkt)
                     reTX += 1
                     timeout = True
@@ -131,7 +131,7 @@ def switchy_main(net):
             '''
 
             if sender_window > rhs - lhs and rhs <= num:
-                pkt = mk_pkt(blaster_mac, middlebox_mac, blaster_ip, dst_ip, rhs, length)
+                pkt = mk_pkt(blaster_mac, middlebox_mac, blaster_ip, blastee_ip, rhs, length)
                 net.send_packet(blaster_mac, pkt)
                 if (start_time < 0):
                     start_time = time.time() * 1000
