@@ -24,16 +24,16 @@ def parse_params(filename):
     recv_timeout = ""
 
     for i in range(0, len(params), 2):
-        if 'n' in params(i):
-            num = params(i + 1)
-        elif 'l' in params(i):
-            length = params(i + 1)
-        elif 'w' in params(i):
-            sender_window = params(i + 1)
-        elif 't' in params(i):
-            timeout = params(i + 1)
-        elif 'r' in params(i):
-            recv_timeout = params(i + 1)
+        if 'n' in params[i]:
+            num = params[i + 1]
+        elif 'l' in params[i]:
+            length = params[i + 1]
+        elif 'w' in params[i]:
+            sender_window = params[i + 1]
+        elif 't' in params[i]:
+            timeout = params[i + 1]
+        elif 'r' in params[i]:
+            recv_timeout = params[i + 1]
 
     return num, length, sender_window, timeout, recv_timeout
 

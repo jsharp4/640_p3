@@ -18,10 +18,10 @@ def parse_params(filename):
     prob = ""
 
     for i in range(0, len(params), 2):
-        if 's' in params(i):
-            seed = params(i + 1)
-        elif 'p' in params(i):
-            prob = params(i + 1)
+        if 's' in params[i]:
+            seed = params[i + 1]
+        elif 'p' in params[i]:
+            prob = params[i + 1]
 
     return seed, prob
 
