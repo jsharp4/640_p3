@@ -69,8 +69,8 @@ def switchy_main(net):
 
     num, length, sender_window, timeout, recv_timeout = parse_params("./blaster_params.txt")
 
-    LHS = 1
-    RHS = 1
+    lhs = 1
+    rhs = 1
 
     timeout_queue = []
 
@@ -99,14 +99,14 @@ def switchy_main(net):
                     timeout_queue.remove(pending_pkt)
                     break
 
-            if len(timeout_queue) == 0 and RHS > num:
+            if len(timeout_queue) == 0 and rhs > num:
                 break
                 
-            elif sequence == LHS:
+            elif sequence == lhs:
                 if len(timeout_queue) > 0:
-                    LHS = timeout_queue[0][0]
+                    lhs = timeout_queue[0][0]
                 else:
-                    LHS = RHS
+                    lhs = rhs
 
         else:
             log_debug("Didn't receive anything")
@@ -130,13 +130,13 @@ def switchy_main(net):
             Creating the headers for the packet
             '''
 
-            if sender_window > RHS - LHS and RHS <= num:
-                pkt = mk_pkt(blaster_mac, middlebox_mac, blaster_ip, dst_ip, RHS, length)
+            if sender_window > rhs - lhs and rhs <= num:
+                pkt = mk_pkt(blaster_mac, middlebox_mac, blaster_ip, dst_ip, rhs, length)
                 net.send_packet(blaster_mac, pkt)
                 if (start_time < 0):
                     start_time = time.time()
-                timeout_queue.append((RHS, time.time())
-                RHS = RHS + 1
+                timeout_queue.append((rhs, time.time())
+                rhs += 1
 
 
             '''
