@@ -121,7 +121,7 @@ def switchy_main(net):
                     pkt = mk_pkt(blaster_mac, middlebox_mac, blaster_ip, dst_ip, pending_pkt[0], length)
                     net.send_packet(blaster_mac, pkt)
                     reTX += 1
-                    timeout = true
+                    timeout = True
                     break
 
             if timeout:
