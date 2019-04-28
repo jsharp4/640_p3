@@ -9,26 +9,24 @@ import time
 def mk_ack_pkt(src_mac, dst_mac, src_ip, dst_ip, sequence_num, payload):
     ethernet = Ethernet(src = src_mac, dst = dst_mac, ethertype = EtherType.SLOW)
     ip =  IPv4(src = src_ip, dst = dst_ip, protocol = IPProtocol.UDP)
-    udp = UDP(src = '1357', dst = '2468')
-    payload = [0xab] * payload_length
+    udp = UDP(src = 1357, dst = 2468)
 
-    pkt = ethernet + ip + udp + RawPacketContents(sequence_num.to_bytes(4, 'big') + payload_length.to_bytes(2, 'big') + payload.to_bytes(payload_length, 'big'))
+    pkt = ethernet + ip + udp + RawPacketContents(sequence_num.to_bytes(4, 'big') + payload)
     return pkt 
 
 def parse_pkt(pkt):
-    part_payload = bytearray(pkt[RawPacketContents].to_bytes(6, 'big'))
-    sequence = int.from_bytes(part_payload[0:4], 'big')
-    length = int.from_bytes(part_payload[4:6], 'big')
+    payload = bytearray(pkt[RawPacketContents].to_bytes())
+    sequence = int.from_bytes(bytes(payload[0:4]), 'big')
+    length = int.from_bytes(bytes(payload[4:6]), 'big')
 
-    full_payload = bytearray(pkt[RawPacketContents].to_bytes(6 + length, 'big'))
-    data = full_payload[6:length].to_bytes(8, 'big')
+    data = bytes(payload[6:length])
 
     return sequence, data
 
 
 def switchy_main(net):
-    my_interfaces = net.interfaces()
-    mymacs = [intf.ethaddr for intf in my_interfaces]
+    my_intf = net.interfaces()
+    mymacs = [intf.ethaddr for intf in my_intf]
     
     blaster_mac = '10:00:00:00:00:01'
     mid_blaster_mac = '20:00:00:00:00:01'
@@ -57,7 +55,7 @@ def switchy_main(net):
 
             sequence, data = parse_pkt(pkt)
             ack = mk_ack_pkt(blastee_mac, mid_blastee_mac, blastee_ip, blaster_ip, sequence, data)
-            net.send_packet(blastee_mac, ack)
+            net.send_packet(my_intf[0].name, ack)
 
 
     net.shutdown()

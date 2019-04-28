@@ -85,7 +85,7 @@ def switchy_main(net):
             '''
             pkt[Ethernet].dst = blaster_mac
             pkt[Ethernet].src = mid_blaster_mac
-            net.send_pack('middlebox_eth0', pkt)
+            net.send_packet('middlebox-eth0', pkt)
         else:
             log_debug("Oops :))")
 
