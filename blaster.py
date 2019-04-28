@@ -136,7 +136,7 @@ def switchy_main(net):
                 if (start_time < 0):
                     start_time = time.time()
                 timeout_queue.append((RHS, time.time())
-                RHS += 1
+                RHS = RHS + 1
 
 
             '''
