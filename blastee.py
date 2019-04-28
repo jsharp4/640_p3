@@ -20,7 +20,7 @@ def parse_pkt(pkt):
     sequence = int.from_bytes(part_payload[0:4], 'big')
     length = int.from_bytes(part_payload[4:6], 'big')
 
-    full_payload = bytearray(pkt[RawPacketContents].to_bytes(6 + length, 'big')))
+    full_payload = bytearray(pkt[RawPacketContents].to_bytes(6 + length, 'big'))
     data = full_payload[6:length].to_bytes(8, 'big')
 
     return sequence, data

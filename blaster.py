@@ -52,7 +52,7 @@ def parse_pkt(pkt):
     sequence = int.from_bytes(payload, 'big', signed = False)
     return sequence 
 
-    
+
 def switchy_main(net):
     my_intf = net.interfaces()
     mymacs = [intf.ethaddr for intf in my_intf]
@@ -63,7 +63,7 @@ def switchy_main(net):
     blastee_mac = '40:00:00:00:00:{:02x}'
 
     blaster_ip = '192.168.100.1/30'
-    blastee_ip = '192.168.200.1/30
+    blastee_ip = '192.168.200.1/30'
     mid_blaster_ip = '192.168.100.2/30'
     mid_blastee_ip = '192.168.200.2/30'
 
