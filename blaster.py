@@ -57,15 +57,15 @@ def switchy_main(net):
     my_intf = net.interfaces()
     mymacs = [intf.ethaddr for intf in my_intf]
     myips = [intf.ipaddr for intf in my_intf]
-
-	blaster_mac = '10:00:00:00:00:01'
-	mid_blaster_mac = '20:00:00:00:00:01'
-	mid_blastee_mac = '20:00:00:00:00:02'
-	blastee_mac = '40:00:00:00:00:01'
-	blaster_ip = '192.168.100.1/30'
-	blastee_ip = '192.168.200.1/30'
-	mid_blaster_ip = '192.168.100.2/30'
-	mid_blastee_ip = '192.168.200.2/30'
+    
+    blaster_mac = '10:00:00:00:00:01'
+    mid_blaster_mac = '20:00:00:00:00:01'
+    mid_blastee_mac = '20:00:00:00:00:02'
+    blastee_mac = '40:00:00:00:00:01'
+    blaster_ip = '192.168.100.1/30'
+    blastee_ip = '192.168.200.1/30'
+    mid_blaster_ip = '192.168.100.2/30'
+    mid_blastee_ip = '192.168.200.2/30'
 
     num, length, sender_window, timeout, recv_timeout = parse_params("./blaster_params.txt")
 
