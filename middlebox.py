@@ -23,7 +23,7 @@ def parse_params(filename):
         elif 'p' in params[i]:
             prob = params[i + 1]
 
-    return seed, prob
+    return int(seed), int(prob)
 
 def switchy_main(net):
 

@@ -35,7 +35,7 @@ def parse_params(filename):
         elif 'r' in params[i]:
             recv_timeout = params[i + 1]
 
-    return num, length, sender_window, timeout, recv_timeout
+    return int(num), int(length), int(sender_window), int(timeout), int(recv_timeout)
 
 def mk_pkt(src_mac, dst_mac, src_ip, dst_ip, sequence_num, payload):
     ethernet = Ethernet(src = blaster_mac, dst = middlebox_mac, ethertype = EtherType.Slow)
