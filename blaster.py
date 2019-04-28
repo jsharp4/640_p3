@@ -135,7 +135,7 @@ def switchy_main(net):
                 net.send_packet(blaster_mac, pkt)
                 if (start_time < 0):
                     start_time = time.time()
-                timeout_queue.append((rhs, time.time())
+                timeout_queue.append((rhs, time.time()))
                 rhs += 1
 
 
