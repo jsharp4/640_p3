@@ -15,11 +15,15 @@ def mk_ack_pkt(src_mac, dst_mac, src_ip, dst_ip, sequence_num, payload):
     return pkt 
 
 def parse_pkt(pkt):
-    payload = bytearray(pkt[RawPacketContents].to_bytes())
-    sequence = int.from_bytes(bytes(payload[0:4]), 'big')
-    length = int.from_bytes(bytes(payload[4:6]), 'big')
-
-    data = bytes(payload[6:length])
+    payload = bytearray(pkt[RawPacketContents].data)
+    log_debug("RAW PACKET CONTENTS SIZE: " + str(pkt[RawPacketContents].size()))
+    start_raw = pkt[Ethernet].size()
+    start_raw += pkt.get_header(IPv4).size()
+    start_raw += pkt[UDP].size()
+    sequence = int.from_bytes(bytes(payload[start_raw:start_raw + 4]), 'big')
+    length = int.from_bytes(bytes(payload[start_raw + 4: start_raw + 6]), 'big')
+    log_debug("RECEIVED PACKET SEQUENCE NUM: " + str(sequence))
+    data = bytes(payload[start_raw + 6: start_raw + length])
 
     return sequence, data
 
@@ -56,6 +60,7 @@ def switchy_main(net):
             sequence, data = parse_pkt(pkt)
             ack = mk_ack_pkt(blastee_mac, mid_blastee_mac, blastee_ip, blaster_ip, sequence, data)
             net.send_packet(my_intf[0].name, ack)
+            log_debug("ACK PACKET SEQUENCE NUM: " + str(sequence))
 
 
     net.shutdown()

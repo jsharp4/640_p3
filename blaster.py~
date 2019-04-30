@@ -43,12 +43,13 @@ def mk_pkt(src_mac, dst_mac, src_ip, dst_ip, sequence_num, payload_length):
     udp = UDP(src = 1357, dst = 2468)
     payload = [0xab] * payload_length
 
-    pkt = ethernet + ip + udp + RawPacketContents(sequence_num.to_bytes(4, 'big') + payload_length.to_bytes(2, 'big') + bytes(payload))
+    pkt = udp + ip + ethernet + RawPacketContents(sequence_num.to_bytes(4, 'big') + payload_length.to_bytes(2, 'big') + bytes(payload))
     return pkt
 
 def parse_pkt(pkt):
     payload = bytearray(pkt[RawPacketContents].to_bytes())
     sequence = int.from_bytes(bytes(payload[0:4]), 'big', signed = False)
+    log_debug("RECEIVED PACKET SEQUENCE NUM: " + str(sequence))
     return sequence 
 
 
@@ -119,6 +120,7 @@ def switchy_main(net):
                     pending_pkt[1] = curr_time
                     pkt = mk_pkt(blaster_mac, mid_blaster_mac, blaster_ip, blastee_ip, pending_pkt[0], length)
                     net.send_packet(my_intf[0].name, pkt)
+                    log_debug("SENDING PACKET SEQUENCE NUM: " + str(pending_pkt[0]))
                     reTX += 1
                     timeout = True
                     break
@@ -132,6 +134,7 @@ def switchy_main(net):
             if sender_window > rhs - lhs and rhs <= num:
                 pkt = mk_pkt(blaster_mac, mid_blaster_mac, blaster_ip, blastee_ip, rhs, length)
                 net.send_packet(my_intf[0].name, pkt)
+                log_debug("SENDING PACKET SEQUENCE NUM: " + str(rhs))
                 if (start_time < 0):
                     start_time = time.time() * 1000
                 timeout_queue.append((rhs, time.time() * 1000))

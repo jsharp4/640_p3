@@ -73,7 +73,9 @@ def switchy_main(net):
             if not drop_pkt:
                 pkt[Ethernet].dst = blastee_mac
                 pkt[Ethernet].src = mid_blastee_mac
-                net.send_packet("middlebox-eth1", pkt)
+                udp = pkt[UDP]
+                ip = pkt[IPv4]
+                net.send_packet("middlebox-eth1", udp + ip + pkt)
 
 
         elif dev == "middlebox-eth1":
@@ -85,7 +87,9 @@ def switchy_main(net):
             '''
             pkt[Ethernet].dst = blaster_mac
             pkt[Ethernet].src = mid_blaster_mac
-            net.send_packet('middlebox-eth0', pkt)
+            udp = pkt[UDP]
+            ip = pkt[IPv4]
+            net.send_packet("middlebox-eth0", udp + ip + pkt)
         else:
             log_debug("Oops :))")
 

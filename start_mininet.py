@@ -44,7 +44,7 @@ class PyRouterTopo(Topo):
 
         linkconfig = {
             'bw': 10,
-            'delay': '37.5ms', # Feel free to play with this value to see how it affects the communication
+            'delay': '20ms', # Feel free to play with this value to see how it affects the communication
             'loss': 0.0
         }
 

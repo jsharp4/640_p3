@@ -8,7 +8,7 @@ from mininet.log import lg
 from mininet.node import CPULimitedHost
 from mininet.link import TCLink
 from mininet.util import irange, custom, quietRun, dumpNetConnections
-from mininet.cli import CLI
+from mininet.cli import CLI	
 
 from time import sleep, time
 from subprocess import Popen, PIPE
@@ -44,7 +44,7 @@ class PyRouterTopo(Topo):
 
         linkconfig = {
             'bw': 10,
-            'delay': '37.5ms', # Feel free to play with this value to see how it affects the communication
+            'delay': '20ms', # Feel free to play with this value to see how it affects the communication
             'loss': 0.0
         }
 
